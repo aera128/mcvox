@@ -1,9 +1,11 @@
-
 CC=g++
 PWD=`pwd`
 
-INCDIRS := ./include/
-LIBS := z
+INCDIRS := \
+	./include/\
+	/usr/local/include/ImageMagick-6/
+LIBS := \
+	z\
 
 SOURCES = \
 	src/color/texture.cpp \
@@ -34,8 +36,8 @@ endif
 
 OBJECTS := $(addprefix build/obj/$(TDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 
-CPPFLAGS := -pthread $(INCDIRS:%=-I%) $(OPTARG) $(PROFARG) -m64 -Wall -Wno-deprecated `Magick++-config --cppflags`
-LIBTEXT  := $(addprefix -l, $(LIBS)) `Magick++-config --ldflags`
+CPPFLAGS := -pthread $(INCDIRS:%=-I%) $(OPTARG) $(PROFARG) -m64 -Wall -Wno-deprecated `Magick++-config --cppflags --cxxflags --ldflags --libs`
+LIBTEXT  := $(addprefix -l, $(LIBS)) `Magick++-config --cppflags --cxxflags --ldflags --libs`
 
 mcvox: dirs $(OBJECTS)
 	$(CC) $(CPPFLAGS) $(OBJECTS) $(LIBTEXT) -o build/bin/$(EXNAME)

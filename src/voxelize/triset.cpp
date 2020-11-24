@@ -91,8 +91,10 @@ triset::triset(unsigned int maxVoxExt, const geom::triset& tris, PROGRESSFN pfn)
 		}
 
 		// convert this triangle into voxel volume coordinates
+
 		geom::triangle tri = tris[i] - to;
 		tri.scale(sx, sy, sz);
+
 
 		// put voxels on this surface into the voxel volume
 		rasterize(tri);

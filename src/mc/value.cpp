@@ -268,7 +268,7 @@ void int4s::show(std::ostream& out) const {
 	out << "|";
 	if (this->x.size() > 0) {
 		out << this->x[0];
-		for (int i = 1; i < this->x.size(); ++i) {
+		for (long unsigned int i = 1; i < this->x.size(); ++i) {
 			out << ";";
 			out << this->x[i];
 		}
@@ -281,7 +281,7 @@ void array::show(std::ostream& out) const {
 	out << "[ty=" << int(this->x.first) << ";";
 	if (this->x.second.size() > 0) {
 		mc::show((value*)this->x.second[0], out);
-		for (int i = 1; i < this->x.second.size(); ++i) {
+		for (long unsigned int i = 1; i < this->x.second.size(); ++i) {
 			out << ", ";
 			mc::show((value*)this->x.second[i], out);
 		}
@@ -294,7 +294,7 @@ void tuple::show(std::ostream& out) const {
 	out << "(";
 	if (this->x.size() > 0) {
 		mc::show((value*)this->x[0], out);
-		for (int i = 1; i < this->x.size(); ++i) {
+		for (long unsigned int i = 1; i < this->x.size(); ++i) {
 			out << ", ";
 			mc::show((value*)this->x[i], out);
 		}

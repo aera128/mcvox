@@ -37,13 +37,14 @@ color::value texture::texel(double u, double v) const {
 	double xw[2] = { 1.0 - (u - floor(u)), 1.0 - (ceil(u) - u) };
 	int    ys[2] = { int(floor(fy)),       int(ceil(fy)) };
 	double yw[2] = { 1.0 - (v - floor(v)), 1.0 - (ceil(v) - v) };
-
+	
 	color::value cs[] = {
 		texel(xs[0], ys[0]),
 		texel(xs[1], ys[0]),
 		texel(xs[0], ys[1]),
 		texel(xs[1], ys[1])
 	};
+
 
 	double ws[] = {
 		xw[0] * yw[0],
@@ -58,7 +59,12 @@ color::value texture::texel(double u, double v) const {
 color::value texture::texel(int tx, int ty) const {
 	if (this->pixels) {
 		tx = tx % this->cx;
-		ty = this->cy - (ty % this->cy);
+		if(ty != 0){
+			ty = this->cy - (ty % this->cy);
+		}
+		if(ty == 1024){
+			--ty;
+		}
 		const Magick::PixelPacket* p = this->pixels + tx + ty * this->cx;
 		return color::make(p->red, p->green, p->blue, 0xff - p->opacity);
 	} else {

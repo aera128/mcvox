@@ -6,6 +6,7 @@
 #include <Magick++.h>
 
 #include <sys/time.h>
+#include <cstring>
 #include <time.h>
 
 void resetCounter();
@@ -16,7 +17,7 @@ void usage(int argc, char** argv) {
 			  << "  where"                                                             << std::endl
 			  << "    input      : The .OBJ or image file to import."                  << std::endl
 			  << "    output     : The voxelized Minecraft .schematic file to export." << std::endl
-			  << "    max-extent : The maximum number of blocks on any axis (1-256)."  << std::endl
+			  << "    max-extent : The maximum number of blocks on any axis (1-256 recommended, max 100000 )."  << std::endl
 			  << std::endl;
 
 	exit(-1);
@@ -52,7 +53,7 @@ config readConfiguration(int argc, char** argv) {
 	}
 
 	// did we read a valid input?
-	if ((result.maximumDimension == 0 || result.maximumDimension > 256) || result.inputObjFile.empty() || result.outputSchematicFile.empty()) {
+	if ((result.maximumDimension == 0 || result.maximumDimension > 100000) || result.inputObjFile.empty() || result.outputSchematicFile.empty()) {
 		usage(argc, argv);
 	}
 

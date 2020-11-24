@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <vector>
+#include <string>
 
 namespace obj {
 
@@ -88,13 +89,8 @@ void reader::processCommand(const std::string& basedir, const std::string& cn, c
 			throw std::runtime_error("Invalid OBJ texture coord command: " + line(cn, args));
 		}
 	} else if (cn == "f") {
-		if (args.size() == 3) {
-			this->data.append(geom::triangle(point(args[0]), point(args[1]), point(args[2]), this->currentTexture));
-		} else if (args.size() == 4) {
-			this->data.append(geom::triangle(point(args[0]), point(args[1]), point(args[2]), this->currentTexture));
-			this->data.append(geom::triangle(point(args[1]), point(args[2]), point(args[3]), this->currentTexture));
-		} else {
-			throw std::runtime_error("Invalid OBJ face command: " + line(cn, args));
+		for(long unsigned int i = 0; i < args.size() - 2; i++){
+			this->data.append(geom::triangle(point(args[0+i]), point(args[1+i]), point(args[2+i]), this->currentTexture));
 		}
 	} else if (cn == "usemtl") {
 		Textures::iterator t = this->textures.find(args[0]);
@@ -103,7 +99,7 @@ void reader::processCommand(const std::string& basedir, const std::string& cn, c
 		} else {
 			throw std::runtime_error("No such texture: " + args[0]);
 		}
-	} else if (cn == "g" || cn == "o" || cn == "s") {
+	} else if (cn == "g" || cn == "o" || cn == "s"|| cn == "vn") {
 		// redundant 'usemtl' command
 	} else if (cn == "mtllib") {
 		readTextures(basedir + "/" + args[0]);
